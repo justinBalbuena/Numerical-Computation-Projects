@@ -44,44 +44,62 @@ def diagonalization(A):
 
 def jacobi_method(A, tolerance, flag):
     """
+    Jacobi method for solving systems of linear equations.
 
-    :param A:
-    :param tolerance:
-    :param flag:
-    :return:
+    :param A: Augmented matrix (matrix + vector of constants)
+    :param tolerance: Stopping criteria based on the error threshold
+    :param flag: Specifies whether to use 'MAE' or 'RMSE' for stopping criteria
+    :return: Approximated solution vector once the error is below tolerance
     """
 
+    # Make a copy of the input matrix to work on
     diag_matrix = A.copy()
-    if is_diagonally_dominant(A) == false:
+
+    # Check if the matrix is diagonally dominant, and diagonalize it if necessary
+    if is_diagonally_dominant(A) == False:
         diag_matrix = diagonalization(A)
 
-    # number of rows and columns in the matrix
+    # Get the number of rows and columns in the matrix
     row_indices = diag_matrix.shape[0]
     column_indices = diag_matrix.shape[1]
 
+    # Initialize a list to store the old approximation values for unknowns
     old_x_approximation = []
 
+    # Initialize the approximation with random values for all unknowns
     for i in range(column_indices - 1):
         old_x_approximation.append(float(int(random() * 10)))
 
+    # Copy the initial approximation to create a new approximation vector
     new_x = old_x_approximation.copy()
+
+    # Normalize the matrix to prepare for iteration (divide each row by the diagonal element)
     for i in range(row_indices):
         diag_matrix[i, column_indices - 1] = diag_matrix[i, column_indices - 1] / diag_matrix[i, i]
         for j in range(row_indices):
             if i != j:
                 diag_matrix[i, j] = diag_matrix[i, j] / diag_matrix[i, i]
 
+    # Iterative process until the stopping condition is met
     while True:
+        # Reset error to 0 at the start of each iteration
         error = 0
+
+        # Store the current approximation as the old approximation
         for i in range(row_indices):
             old_x_approximation[i] = new_x[i]
+
+            # Update the new approximation starting with the constant value (b_i)
             new_x[i] = diag_matrix[i, column_indices - 1]
 
+        # Iterate through the matrix rows and update the approximations using the Jacobi method formula
         for i in range(row_indices):
             for j in range(row_indices):
                 if i != j:
+                    # Adjust the approximation using the previous iteration's values of other unknowns
                     new_x[i] = new_x[i] - diag_matrix[i, j] * old_x_approximation[j]
 
+        # Error evaluation based on the stopping criteria flag ('MAE' or 'RMSE')
         match flag:
             case 'MAE':
                 for i in range(len(new_x)):
