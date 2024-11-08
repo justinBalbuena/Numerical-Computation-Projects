@@ -6,13 +6,13 @@ def lagrange_interpolation(values, wanted_value, type):
     y_vals.sort()
 
     match type:
-        case 'cubic':
+        case 'quadratic':
             if len(x_vals) >= 3:
                 x_vals = x_vals[0:3]
                 y_vals = y_vals[0:3]
             else:
                 print("Not enough values for cubic so all values will be used")
-        case 'quadratic':
+        case 'cubic':
             if len(x_vals) >= 4:
                 x_vals = x_vals[0:4]
                 y_vals = y_vals[0:4]
@@ -30,14 +30,14 @@ def lagrange_interpolation(values, wanted_value, type):
     return interpolated_value
 
 
-def our_function(values, step, flag, type):
+def lagrange_with_diff(values, step, flag, type):
     """
 
-    :param values:
-    :param step:
-    :param flag:
+    :param values: dictionary of x and y values
+    :param step: value of h
+    :param flag: the kind of formula to use
     :param type: type of interpolation to use
-    :return:
+    :return: the derivative found using the formulas and interpolating
     """
 
     values_copy = values.copy()
@@ -46,13 +46,13 @@ def our_function(values, step, flag, type):
     if user_input not in values:
         y0 = lagrange_interpolation(values_copy, user_input, type)
         values_copy[user_input] = y0
-    # at this point i have x0 and its matching y-value
+    # at this point I have x0 and its matching y-value
 
     match flag:
         case 'a':
             x_plus_h = user_input + step
             if x_plus_h not in values:
-                y_for_plusH = lagrange_interpolation(values, user_input, type)
+                y_for_plusH = lagrange_interpolation(values, x_plus_h, type)
                 values_copy[x_plus_h] = y_for_plusH
 
             # at this point I have both x0 and x0+h with their matching y values
@@ -71,12 +71,12 @@ def our_function(values, step, flag, type):
 
             # at this point I have x0, x0+h, and x0+2h with their matching y values
 
-            deriv_x0 = ((-1.0 * (values_copy[x_plus_twoh])) + 4*values_copy[x_plus_h] - 3*values_copy[user_input]) / (2*step)
+            deriv_x0 = ((-1.0 * (values_copy[x_plus_twoh])) + (4*values_copy[x_plus_h]) - (3*values_copy[user_input])) / (2*step)
             return deriv_x0
         case 'c':
             x_plus_h = user_input + step
             if x_plus_h not in values:
-                y_for_plusH = lagrange_interpolation(values, x_plus_h)
+                y_for_plusH = lagrange_interpolation(values, x_plus_h, type)
                 values_copy[x_plus_h] = y_for_plusH
 
             x_minus_h = user_input - step
@@ -101,6 +101,6 @@ cord_dict = {
     0.35: 0.54410
 }
 
-testval = our_function(cord_dict, 0.01, 'b', 'quadratic')
+testval = lagrange_with_diff(cord_dict, 0.01, 'a', 'cubic')
 print(testval)
 
