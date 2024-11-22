@@ -52,35 +52,35 @@ def gauss_with_pivot(A):
 
     return x
 
+if __name__ == "__main__":
+    while True:
+        user_augmatrix = []
+        user_row = []
 
-while True:
-    user_augmatrix = []
-    user_row = []
+        constants = []
 
-    constants = []
+        # since it is an n x n matrix only need to get n
+        matrix_size = int(input("What size square matrix do you want to input (i.e, 2, 4, 5): "))
+        for x in range(0, matrix_size):
+            for j in range(0, matrix_size):
+                user_row.append(float(input(f"Put in a number for row {x}: ")))
+            user_augmatrix.append(user_row.copy())
+            user_row.clear()
 
-    # since it is an n x n matrix only need to get n
-    matrix_size = int(input("What size square matrix do you want to input (i.e, 2, 4, 5): "))
-    for x in range(0, matrix_size):
-        for j in range(0, matrix_size):
-            user_row.append(float(input(f"Put in a number for row {x}: ")))
-        user_augmatrix.append(user_row.copy())
-        user_row.clear()
+        print("Top down, put in the constants for your matrix: ")
+        for x in range(0, matrix_size):
+            constants.append(float(input(f"Constant {x}: ")))
 
-    print("Top down, put in the constants for your matrix: ")
-    for x in range(0, matrix_size):
-        constants.append(float(input(f"Constant {x}: ")))
+        # This will create the full augmented matrix
+        matrix = Matrix(user_augmatrix)
+        constants_col = Matrix(constants)
 
-    # This will create the full augmented matrix
-    matrix = Matrix(user_augmatrix)
-    constants_col = Matrix(constants)
+        matrix = matrix.col_insert(matrix_size, constants_col)
+        print(gauss_with_pivot(matrix))
 
-    matrix = matrix.col_insert(matrix_size, constants_col)
-    print(gauss_with_pivot(matrix))
-
-    continue_or = input("\nContinue or stop? (Y/N): ")
-    match continue_or:
-        case "Y":
-            pass
-        case "N":
-            break
+        continue_or = input("\nContinue or stop? (Y/N): ")
+        match continue_or:
+            case "Y":
+                pass
+            case "N":
+                break

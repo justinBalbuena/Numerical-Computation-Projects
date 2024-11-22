@@ -82,15 +82,16 @@ def trapezoidal_rule(values, h):
     return integral
 
 
-cord_dict = {
-    1.0: 1.543,
-    1.1: 1.669,
-    1.3: 1.971,
-    1.4: 2.151,
-    1.5: 2.352,
-    1.7: 2.828,
-    1.8: 3.107
-}
+if __name__ == "__main__":
+    cord_dict = {
+        1.0: 1.543,
+        1.1: 1.669,
+        1.3: 1.971,
+        1.4: 2.151,
+        1.5: 2.352,
+        1.7: 2.828,
+        1.8: 3.107
+    }
 
-testval = trapezoidal_rule(cord_dict, 0.1)
-print(testval)
+    testval = trapezoidal_rule(cord_dict, 0.1)
+    print(testval)

@@ -92,15 +92,16 @@ def lagrange_with_diff(values, step, flag, type):
             return "Did not enter a flag value"
 
 
-cord_dict = {
-    0.15: 0.1761,
-    0.21: 0.3222,
-    0.23: 0.3617,
-    0.27: 0.4314,
-    0.32: 0.5051,
-    0.35: 0.54410
-}
+if __name__ == "__main__":
+    cord_dict = {
+        0.15: 0.1761,
+        0.21: 0.3222,
+        0.23: 0.3617,
+        0.27: 0.4314,
+        0.32: 0.5051,
+        0.35: 0.54410
+    }
 
-testval = lagrange_with_diff(cord_dict, 0.01, 'a', 'cubic')
-print(testval)
+    testval = lagrange_with_diff(cord_dict, 0.01, 'a', 'cubic')
+    print(testval)
 

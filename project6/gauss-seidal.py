@@ -121,42 +121,42 @@ def gauss_seidel(A, tolerance, flag):
                 if error < tolerance:
                     return new_x
 
+if __name__ == "__main__":
+    while True:
+        user_augmatrix = []  # List to store user input for the augmented matrix
+        user_row = []  # Temporary storage for each row of the matrix
 
-while True:
-    user_augmatrix = []  # List to store user input for the augmented matrix
-    user_row = []  # Temporary storage for each row of the matrix
+        constants = []  # List to store the constants (b values)
 
-    constants = []  # List to store the constants (b values)
+        # Ask the user for the size of the square matrix (n x n)
+        matrix_size = int(input("What size square matrix do you want to input (i.e, 2, 4, 5): "))
 
-    # Ask the user for the size of the square matrix (n x n)
-    matrix_size = int(input("What size square matrix do you want to input (i.e, 2, 4, 5): "))
+        # Collect matrix elements row by row from user input
+        for x in range(0, matrix_size):
+            for j in range(0, matrix_size):
+                user_row.append(float(input(f"Put in a number for row {x}: ")))
+            user_augmatrix.append(user_row.copy())
+            user_row.clear()  # Clear temporary row after adding it to the matrix
 
-    # Collect matrix elements row by row from user input
-    for x in range(0, matrix_size):
-        for j in range(0, matrix_size):
-            user_row.append(float(input(f"Put in a number for row {x}: ")))
-        user_augmatrix.append(user_row.copy())
-        user_row.clear()  # Clear temporary row after adding it to the matrix
+        # Collect constants (b values) from user input
+        print("Top down, put in the constants for your matrix: ")
+        for x in range(0, matrix_size):
+            constants.append(float(input(f"Constant {x}: ")))
 
-    # Collect constants (b values) from user input
-    print("Top down, put in the constants for your matrix: ")
-    for x in range(0, matrix_size):
-        constants.append(float(input(f"Constant {x}: ")))
+        # Create the full augmented matrix
+        matrix = Matrix(user_augmatrix)
+        constants_col = Matrix(constants)
+        matrix = matrix.col_insert(matrix_size, constants_col)
 
-    # Create the full augmented matrix
-    matrix = Matrix(user_augmatrix)
-    constants_col = Matrix(constants)
-    matrix = matrix.col_insert(matrix_size, constants_col)
+        tolerance = float(input("Please enter your tolerance value: "))
 
-    tolerance = float(input("Please enter your tolerance value: "))
+        stopping_criteria = input("Please enter MAE, RMSE for your stopping criteria: ")
 
-    stopping_criteria = input("Please enter MAE, RMSE for your stopping criteria: ")
+        print(gauss_seidel(matrix, tolerance, stopping_criteria))
 
-    print(gauss_seidel(matrix, tolerance, stopping_criteria))
-
-    continue_or = input("\nContinue or stop? (Y/N): ")
-    match continue_or:
-        case "Y":
-            pass
-        case "N":
-            break
+        continue_or = input("\nContinue or stop? (Y/N): ")
+        match continue_or:
+            case "Y":
+                pass
+            case "N":
+                break

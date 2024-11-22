@@ -62,36 +62,36 @@ def newtons(x0, choice, user_function, delta):
         # updates x0 to x1
         x0 = x1
 
+if __name__ == "__main__":
+    while True:
+        # Gets the equation from the user
+        user_input = input("Enter a function of x in a python readable line (e.g., x**2 + 3), the sympy library is "
+                           "imported so please use it as you'd like: ")
 
-while True:
-    # Gets the equation from the user
-    user_input = input("Enter a function of x in a python readable line (e.g., x**2 + 3), the sympy library is "
-                       "imported so please use it as you'd like: ")
+        # Gets the position
+        position = float(input("Enter your position value: "))
 
-    # Gets the position
-    position = float(input("Enter your position value: "))
+        # Gets the stopping criteria
+        stopping_criteria = input("Enter 'absolute_approximate', 'absolute_relative', 'true_absolute_error', 'conjunction' "
+                                  "for the stopping criteria that you want, or exit to leave: ")
 
-    # Gets the stopping criteria
-    stopping_criteria = input("Enter 'absolute_approximate', 'absolute_relative', 'true_absolute_error', 'conjunction' "
-                              "for the stopping criteria that you want, or exit to leave: ")
-
-    # Gets the threshold value
-    delta = float(input("Enter your threshold value: "))
-    match stopping_criteria:
-        case 'absolute_approximate':
-            print("Value, Iterations")
-            print(newtons(position, stopping_criteria, user_input, delta))
-            print("\n")
-        case 'absolute_relative':
-            print("Value, Iterations")
-            print(newtons(position, stopping_criteria, user_input, delta))
-            print("\n")
-        case 'true_absolute_error':
-            print("Value, Iterations")
-            print(newtons(position, stopping_criteria, user_input, delta))
-            print("\n")
-        case 'conjunction':
-            print("Value, Iterations")
-            print(newtons(position, stopping_criteria, user_input, delta))
-        case 'exit':
-            break
+        # Gets the threshold value
+        delta = float(input("Enter your threshold value: "))
+        match stopping_criteria:
+            case 'absolute_approximate':
+                print("Value, Iterations")
+                print(newtons(position, stopping_criteria, user_input, delta))
+                print("\n")
+            case 'absolute_relative':
+                print("Value, Iterations")
+                print(newtons(position, stopping_criteria, user_input, delta))
+                print("\n")
+            case 'true_absolute_error':
+                print("Value, Iterations")
+                print(newtons(position, stopping_criteria, user_input, delta))
+                print("\n")
+            case 'conjunction':
+                print("Value, Iterations")
+                print(newtons(position, stopping_criteria, user_input, delta))
+            case 'exit':
+                break
